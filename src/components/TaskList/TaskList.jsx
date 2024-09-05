@@ -35,20 +35,21 @@ export default function TaskList() {
     return (
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {checked.length > 0 && (
-                <div className="sticky-container">
+                <div className="fixed-container">
                     <div className="action-bar">
-                        <IconButton edge="end" aria-label="comments">
+                        <IconButton edge="end" color="success" aria-label="comments">
                             <TaskAltIcon />
                         </IconButton>
-                        <IconButton edge="end" aria-label="comments">
+                        <IconButton edge="end" color="secondary" aria-label="comments">
                             <EditIcon />
                         </IconButton>
-                        <IconButton edge="end" aria-label="comments" >
+                        <IconButton edge="end" color="error" aria-label="comments" >
                             <DeleteForeverIcon />
                         </IconButton>
                     </div>
                 </div>)
             }
+            
             {toDoList.map((value) => {
                 const { id, title } = value;
                 const labelId = `checkbox-list-label-${id}`;
@@ -56,13 +57,6 @@ export default function TaskList() {
                 return (
                     <ListItem
                         key={id}
-                        // secondaryAction={
-                        //     <IconButton edge="end" aria-label="comments">
-                        //         <TaskAltIcon />
-                        //         <EditIcon />
-                        //         <DeleteForeverIcon />
-                        //     </IconButton>
-                        // }
                         disablePadding
                     >
                         <ListItemButton role={undefined} onClick={handleToggle(id)} dense>

@@ -1,12 +1,16 @@
-.sticky-container {
-    position: sticky;
-    top: 20px;
+.fixed-container {
+    position: fixed;
     z-index: 20;
+    inset: 30px;
+    
 }
 
 .action-bar {
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(10px);
     display: flex;
-    gap: 20px;
+    gap: 30px;
     position: absolute;
+    box-shadow: 0 0 10px 2px gray;
+    padding: 10px 30px;
+    border-radius: 15px;
 }
