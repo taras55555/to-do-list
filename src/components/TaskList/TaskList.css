@@ -1,13 +1,19 @@
 .fixed-container {
     position: fixed;
     z-index: 20;
-    inset: 10px auto;
+    inset: 10px 50%;
+    width: 350px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    transform: translate(-50%);
+
 }
 
 .action-bar {
     backdrop-filter: blur(10px);
     display: flex;
-    gap: 30px;
+    gap: 20px;
     position: absolute;
     box-shadow: 0 0 10px 2px gray;
     padding: 10px 30px;

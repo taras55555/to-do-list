@@ -16,19 +16,23 @@ export default function App() {
   }
 
   return (
-    <>
-      <h1>To-Do List</h1>
+    <main>
+      <section>
+        <header>
+          <h1>To-Do List</h1>
+        </header>
 
-      {toDoList.length === 0 && 'To-Do List is Currently Empty'}
-      <TaskList />
-      <div>
-        {toggleNewTaskButton
-          ? (<NewTaskButton
-            onClick={handleToggleAddTaskForm}
-            title={'Add Task'}
-          />)
-          : (<NewTaskForm />)}
-      </div>
-    </>
+        {toDoList.length === 0 && 'To-Do List is Currently Empty'}
+        <TaskList />
+        <div>
+          {toggleNewTaskButton
+            ? (<NewTaskButton
+              onClick={handleToggleAddTaskForm}
+              title={'Add Task'}
+            />)
+            : (<NewTaskForm />)}
+        </div>
+      </section>
+    </main>
   )
 }

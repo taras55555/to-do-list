@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToDoList } from "../../contexts/ToDoListContext";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,11 +7,17 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import { TransitionGroup } from 'react-transition-group';
+import Fade from '@mui/material/Fade';
+import Tooltip from '@mui/material/Tooltip';
 import {
     Edit as EditIcon,
     DeleteForever as DeleteForeverIcon,
     TaskAlt as TaskAltIcon,
-    Done as DoneIcon
+    RadioButtonUnchecked as RadioButtonUncheckedIcon,
+    Done as DoneIcon,
+    CopyAll as CopyAllIcon
 } from '@mui/icons-material';
 
 import './TaskList.css'
@@ -19,13 +25,16 @@ import './TaskList.css'
 export default function TaskList() {
     const { toDoList, setToDoList } = useToDoList();
     const [checked, setChecked] = useState([]);
+    const [checkedFade, setCheckedFade] = useState(false);
 
-    const handleMarkTasksAsCompleted = () => {
+    useEffect(() => setCheckedFade(checked.length > 0), [checked]);
+
+    const handleMarkTasksAsCompleted = (isChecked) => {
         const nextList = [...toDoList];
 
         checked.forEach((taskId) => {
             const record = nextList.find((task) => task.id === taskId);
-            record.isCompleted = true;
+            record.isCompleted = isChecked ? true : false;
         })
         setToDoList(nextList);
         setChecked([]);
@@ -51,50 +60,77 @@ export default function TaskList() {
     };
 
     return (
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-            {checked.length > 0 && (
-                <div className="fixed-container">
+        <List sx={{
+            width: '100%',
+            bgcolor: 'background.paper'
+        }}>
+
+            <div className="fixed-container">
+                <Fade in={checkedFade} timeout={500}>
                     <div className="action-bar">
-                        <IconButton edge="end" color="success" aria-label="comments" onClick={handleMarkTasksAsCompleted}>
+                        <IconButton color="success" onClick={() => handleMarkTasksAsCompleted(true)}>
                             <TaskAltIcon />
                         </IconButton>
-                        <IconButton edge="end" color="secondary" aria-label="comments">
-                            <EditIcon />
+                        <IconButton onClick={() => handleMarkTasksAsCompleted(false)}>
+                            <RadioButtonUncheckedIcon />
                         </IconButton>
-                        <IconButton edge="end" color="error" aria-label="comments" onClick={handleDeleteTask}>
-                            <DeleteForeverIcon />
-                        </IconButton>
+                        <Tooltip title="Edit">
+                            <IconButton color="secondary">
+                                <EditIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                            <IconButton color="error" onClick={handleDeleteTask}>
+                                <DeleteForeverIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Copy">
+                            <IconButton>
+                                <CopyAllIcon />
+                            </IconButton>
+                        </Tooltip>
                     </div>
-                </div>)
-            }
+                </Fade>
+            </div>
 
-            {toDoList.map((value) => {
-                const { id, title, isCompleted } = value;
-                const labelId = `checkbox-list-label-${id}`;
+            <TransitionGroup>
 
-                return (
-                    <ListItem
-                        key={id}
-                        disablePadding
-                    >
-                        <ListItemButton role={undefined} onClick={handleToggle(id)} dense>
-                            <ListItemIcon>
-                                <Checkbox
-                                    edge="start"
-                                    checked={checked.indexOf(id) !== -1}
-                                    tabIndex={-1}
-                                    disableRipple
-                                    inputProps={{ 'aria-labelledby': labelId }}
-                                />
-                            </ListItemIcon>
-                            <ListItemText id={labelId} primary={`${title}`} className={isCompleted ? 'item-task-text-completed' : 'item-task-text'} />
-                            {isCompleted && (<IconButton edge="end" color="success">
-                                <DoneIcon />
-                            </IconButton>)}
-                        </ListItemButton>
-                    </ListItem>
-                );
-            })}
+                {toDoList.map((value) => {
+                    const { id, title, isCompleted } = value;
+                    const labelId = `checkbox-list-label-${id}`;
+
+                    return (
+                        <Collapse key={id}>
+                            <ListItem
+                                key={id}
+                                disablePadding
+                            >
+                                <ListItemButton role={undefined} onClick={handleToggle(id)} sx={{borderBottom: '1px solid gray'}}>
+                                    <ListItemIcon>
+                                        <Checkbox
+                                            edge="start"
+                                            checked={checked.indexOf(id) !== -1}
+                                            tabIndex={-1}
+                                            disableRipple
+                                            inputProps={{ 'aria-labelledby': labelId }}
+                                        />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        id={labelId}
+                                        primary={`${title}`}
+                                        className={isCompleted
+                                            ? 'item-task-text-completed'
+                                            : 'item-task-text'}
+                                    />
+                                    {isCompleted && (<IconButton edge="end" color="success">
+                                        <DoneIcon />
+                                    </IconButton>)}
+                                </ListItemButton>
+                            </ListItem>
+                        </Collapse>
+                    );
+                })}
+            </TransitionGroup>
         </List>
     );
 }
