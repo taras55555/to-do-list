@@ -1,8 +1,7 @@
 .fixed-container {
     position: fixed;
     z-index: 20;
-    inset: 30px;
-    
+    inset: 10px auto;
 }
 
 .action-bar {
@@ -13,4 +12,11 @@
     box-shadow: 0 0 10px 2px gray;
     padding: 10px 30px;
     border-radius: 15px;
+}
+
+.item-task-text {}
+
+.item-task-text-completed {
+    color: gray;
+    text-decoration: line-through;
 }
