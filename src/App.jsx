@@ -7,7 +7,7 @@ import NewTaskButton from "./components/Buttons/NewTaskButton";
 
 export default function App() {
 
-  const [newTaskValue, setNewTaskValue] = useState('')
+  const [newTaskValue, setNewTaskValue] = useState('');
 
   const { toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
 

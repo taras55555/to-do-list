@@ -9,6 +9,5 @@ createRoot(document.getElementById('root')).render(
     <ToDoListProvider>
       <App />
     </ToDoListProvider>
-
   </StrictMode>,
 )
