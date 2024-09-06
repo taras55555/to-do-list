@@ -93,6 +93,13 @@ export default function TaskList() {
                 </Fade>
             </div>
 
+            {toDoList.length > 1 && (
+                <>
+                    <button onClick={() => setChecked(toDoList.map((task) => task.id))}>Select All</button>
+                    <button onClick={() => setChecked([])}>Deselect All</button>
+                </>
+            )}
+
             <TransitionGroup>
 
                 {toDoList.map((value) => {
@@ -105,7 +112,7 @@ export default function TaskList() {
                                 key={id}
                                 disablePadding
                             >
-                                <ListItemButton role={undefined} onClick={handleToggle(id)} sx={{borderBottom: '1px solid gray'}}>
+                                <ListItemButton role={undefined} onClick={handleToggle(id)} sx={{ borderBottom: '1px solid gray' }}>
                                     <ListItemIcon>
                                         <Checkbox
                                             edge="start"
