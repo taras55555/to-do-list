@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useToDoList } from "../../contexts/ToDoListContext";
 import {
     Box,
@@ -25,7 +25,62 @@ import {
     CopyAll as CopyAllIcon
 } from '@mui/icons-material';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+    palette: {
+        ochre: {
+            main: '#ffa500',
+            light: '#E9DB5D',
+            dark: '#A29415',
+            contrastText: '#fff',
+        }
+    }
+})
+
 import './TaskList.css'
+
+// const ListItemBlock = memo(
+//     function ListItemBlock({ id, title, isCompleted }) {
+
+//         return (
+//             <Collapse key={id}>
+//                 <ListItem
+//                     key={id}
+//                     disablePadding
+//                 >
+//                     <ListItemButton onClick={handleToggle(id)} sx={{ borderBottom: '1px solid orange' }}>
+//                         <ListItemIcon>
+//                             <Checkbox
+//                             id={id}
+//                                 edge="start"
+//                                 checked={checked.indexOf(id) !== -1}
+//                                 tabIndex={-1}
+//                                 disableRipple
+//                                 inputProps={{ 'aria-labelledby': labelId }}
+//                                 sx={{
+//                                     '&.Mui-checked': {
+//                                         color: '#ffa500'
+//                                     },
+//                                 }}
+//                             />
+//                         </ListItemIcon>
+//                         <ListItemText
+//                             id={labelId}
+//                             primary={`${title}`}
+//                             className={isCompleted
+//                                 ? 'item-task-text-completed'
+//                                 : 'item-task-text'}
+//                         />
+//                         {isCompleted && (<IconButton edge="end" color="success">
+//                             <DoneIcon />
+//                         </IconButton>)}
+//                     </ListItemButton>
+//                 </ListItem>
+//             </Collapse>
+//         )
+//     }
+// )
 
 export default function TaskList() {
     const { toDoList, setToDoList } = useToDoList();
@@ -64,6 +119,40 @@ export default function TaskList() {
         setChecked(newChecked);
     };
 
+    // const ListItemBlock = memo(function ListItemBlock({ id, title, isCompleted }) {
+    //     const labelId = `checkbox-list-label-${id}`;
+
+    //     return (
+    // <ListItemButton onClick={handleToggle(id)} sx={{ borderBottom: '1px solid orange' }}>
+    //     <ListItemIcon>
+    //         <Checkbox
+    //             edge="start"
+    //             checked={checked.indexOf(id) !== -1}
+    //             tabIndex={-1}
+    //             disableRipple
+    //             inputProps={{ 'aria-labelledby': labelId }}
+    //             sx={{
+    //                 '&.Mui-checked': {
+    //                     color: '#ffa500'
+    //                 },
+    //             }}
+    //         />
+    //     </ListItemIcon>
+    //     <ListItemText
+    //         id={labelId}
+    //         primary={`${title}`}
+    //         className={isCompleted
+    //             ? 'item-task-text-completed'
+    //             : 'item-task-text'}
+    //     />
+    //     {isCompleted && (<IconButton edge="end" color="success">
+    //         <DoneIcon />
+    //     </IconButton>)}
+    // </ListItemButton>
+    //     )
+    // }
+    // )
+
     return (
         <List sx={{
             width: '100%',
@@ -99,7 +188,7 @@ export default function TaskList() {
             </div>
 
             {toDoList.length > 1 && (
-                <Box sx={{display:'flex', gap:'10px'}}>
+                <Box sx={{ display: 'flex', gap: '10px' }}>
                     <CustomizedButton
                         onClick={() => setChecked(toDoList.map((task) => task.id))}
                         title={'Select All'}
@@ -112,25 +201,31 @@ export default function TaskList() {
             )}
 
             <TransitionGroup>
-
                 {toDoList.map((value) => {
                     const { id, title, isCompleted } = value;
                     const labelId = `checkbox-list-label-${id}`;
 
                     return (
+
                         <Collapse key={id}>
                             <ListItem
                                 key={id}
                                 disablePadding
                             >
-                                <ListItemButton role={undefined} onClick={handleToggle(id)} sx={{ borderBottom: '1px solid gray' }}>
+                                <ListItemButton onClick={handleToggle(id)} sx={{ borderBottom: '1px solid orange' }}>
                                     <ListItemIcon>
                                         <Checkbox
+                                            id={id}
                                             edge="start"
                                             checked={checked.indexOf(id) !== -1}
                                             tabIndex={-1}
                                             disableRipple
                                             inputProps={{ 'aria-labelledby': labelId }}
+                                            sx={{
+                                                '&.Mui-checked': {
+                                                    color: '#ffa500'
+                                                },
+                                            }}
                                         />
                                     </ListItemIcon>
                                     <ListItemText

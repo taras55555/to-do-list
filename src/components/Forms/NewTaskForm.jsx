@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useToDoList } from "../../contexts/ToDoListContext";
 
 import {
-    Box,
     Dialog,
     DialogActions,
     DialogContent,
@@ -46,7 +45,7 @@ export default function NewTaskForm() {
     }
 
     function handleNewTask() {
-        setToDoList([
+        setToDoList((toDoList) => [
             ...toDoList,
             {
                 id: self.crypto.randomUUID(),
@@ -71,7 +70,7 @@ export default function NewTaskForm() {
 
     return (
         <>
-            <Box sx={{ display: 'flex', gap: '10px' }}>
+            
                 <TextField
                     size="small"
                     type="text"
@@ -83,7 +82,7 @@ export default function NewTaskForm() {
                     title={'Add Task'}
                     onClick={handleValidateTask}
                 />
-            </Box>
+            
 
             <Dialog
                 open={open}
