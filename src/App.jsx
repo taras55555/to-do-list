@@ -1,15 +1,10 @@
-import { useState } from "react";
-
 import { useToDoList } from "./contexts/ToDoListContext";
 import NewTaskForm from "./components/Forms/NewTaskForm";
 import TaskList from "./components/TaskList/TaskList";
-import NewTaskButton from "./components/Buttons/NewTaskButton";
+import CustomizedButton from "./components/Buttons/CustomizedButton";
 
 export default function App() {
-
-  const [newTaskValue, setNewTaskValue] = useState('');
-
-  const { toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
+  const { toDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
 
   function handleToggleAddTaskForm() {
     setToggleNewTaskButton(!toggleNewTaskButton);
@@ -26,7 +21,7 @@ export default function App() {
         <TaskList />
         <div>
           {toggleNewTaskButton
-            ? (<NewTaskButton
+            ? (<CustomizedButton
               onClick={handleToggleAddTaskForm}
               title={'Add Task'}
             />)

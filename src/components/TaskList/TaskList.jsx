@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import { useToDoList } from "../../contexts/ToDoListContext";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Collapse from '@mui/material/Collapse';
+import {
+    Box,
+    ListItem,
+    List,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Checkbox,
+    IconButton,
+    Collapse,
+    Fade,
+    Tooltip
+} from '@mui/material';
+
 import { TransitionGroup } from 'react-transition-group';
-import Fade from '@mui/material/Fade';
-import Tooltip from '@mui/material/Tooltip';
+import CustomizedButton from "../Buttons/CustomizedButton";
 import {
     Edit as EditIcon,
     DeleteForever as DeleteForeverIcon,
@@ -94,10 +99,16 @@ export default function TaskList() {
             </div>
 
             {toDoList.length > 1 && (
-                <>
-                    <button onClick={() => setChecked(toDoList.map((task) => task.id))}>Select All</button>
-                    <button onClick={() => setChecked([])}>Deselect All</button>
-                </>
+                <Box sx={{display:'flex', gap:'10px'}}>
+                    <CustomizedButton
+                        onClick={() => setChecked(toDoList.map((task) => task.id))}
+                        title={'Select All'}
+                    />
+                    <CustomizedButton
+                        onClick={() => setChecked([])}
+                        title={'Deselect All'}
+                    />
+                </Box>
             )}
 
             <TransitionGroup>

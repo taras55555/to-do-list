@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useToDoList } from "../../contexts/ToDoListContext";
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
+import {
+    Box,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Stack,
+    TextField
+} from '@mui/material';
+import CustomizedButton from "../Buttons/CustomizedButton";
 
 export default function NewTaskForm() {
 
@@ -16,8 +21,6 @@ export default function NewTaskForm() {
     const { toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
 
     function handleValidateTask(e) {
-        e.preventDefault();
-
         const open = toDoList.filter((task) => task.title === newTaskValue).length > 0;
 
         if (open) {
@@ -57,12 +60,7 @@ export default function NewTaskForm() {
         setToggleNewTaskButton(!toggleNewTaskButton);
     }
 
-    const handleClose = () => {
-        setDialog({
-            ...dialog,
-            open: false
-        })
-    };
+    const handleClose = () => setDialog({ ...dialog, open: false });
 
     const {
         dialogTitle = '',
@@ -73,15 +71,19 @@ export default function NewTaskForm() {
 
     return (
         <>
-            <form>
-                <input
+            <Box sx={{ display: 'flex', gap: '10px' }}>
+                <TextField
+                    size="small"
                     type="text"
                     value={newTaskValue}
                     onChange={e => setNewTaskValue(e.target.value)}
                     autoFocus
                 />
-                <button onClick={handleValidateTask}>Add Task</button>
-            </form>
+                <CustomizedButton
+                    title={'Add Task'}
+                    onClick={handleValidateTask}
+                />
+            </Box>
 
             <Dialog
                 open={open}
@@ -98,24 +100,30 @@ export default function NewTaskForm() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {type === 'prompt' && (
-                        <>
-                            <button onClick={handleClose}>
-                                Disagree
-                            </button>
-                            <button onClick={handleNewTask} autoFocus>
-                                Agree
-                            </button>
-                        </>
-                    )}
-                    {type === 'alert' && (
-                        <>
-                            <button onClick={handleClose}>
-                                OK
-                            </button>
-                        </>
-                    )}
+                    <Stack direction="row" spacing={2}>
+                        {type === 'prompt' && (
+                            <>
+                                <CustomizedButton
+                                    title={'Disagree'}
+                                    onClick={handleClose}
+                                />
 
+                                <CustomizedButton
+                                    title={'Agree'}
+                                    onClick={handleNewTask}
+                                />
+                            </>
+                        )}
+
+                        {type === 'alert' && (
+                            <>
+                                <CustomizedButton
+                                    title={'OK'}
+                                    onClick={handleClose}
+                                />
+                            </>
+                        )}
+                    </Stack>
                 </DialogActions>
             </Dialog>
         </>
