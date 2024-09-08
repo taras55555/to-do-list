@@ -1,27 +1,18 @@
 import { useState } from "react";
 import { useToDoList } from "../../contexts/ToDoListContext";
-
-import {
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Stack,
-    TextField
-} from '@mui/material';
 import CustomizedButton from "../Buttons/CustomizedButton";
+import { TextField } from '@mui/material';
+import ValidateTaskDialog from "../Dialogs/ValidateTaskDialog";
 
 export default function NewTaskForm() {
-
     const [newTaskValue, setNewTaskValue] = useState('')
     const [dialog, setDialog] = useState({ open: false });
 
     const { toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
 
-    function handleValidateTask(e) {
-        const open = toDoList.filter((task) => task.title === newTaskValue).length > 0;
+    function handleValidateTask() {
 
+        const open = toDoList.filter((task) => task.title.toLowerCase() === newTaskValue.toLowerCase()).length > 0;
         if (open) {
             setDialog({
                 dialogTitle: 'This task already exists in the to-do list',
@@ -41,6 +32,7 @@ export default function NewTaskForm() {
             })
             return;
         }
+
         handleNewTask();
     }
 
@@ -59,72 +51,26 @@ export default function NewTaskForm() {
         setToggleNewTaskButton(!toggleNewTaskButton);
     }
 
-    const handleClose = () => setDialog({ ...dialog, open: false });
-
-    const {
-        dialogTitle = '',
-        dialogContentText = '',
-        open = false,
-        type
-    } = dialog;
-
     return (
         <>
-            
-                <TextField
-                    size="small"
-                    type="text"
-                    value={newTaskValue}
-                    onChange={e => setNewTaskValue(e.target.value)}
-                    autoFocus
-                />
-                <CustomizedButton
-                    title={'Add Task'}
-                    onClick={handleValidateTask}
-                />
-            
+            <TextField
+                size="small"
+                type="text"
+                value={newTaskValue}
+                onChange={e => setNewTaskValue(e.target.value)}
+                autoFocus
+            />
 
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {dialogTitle}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        {dialogContentText}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Stack direction="row" spacing={2}>
-                        {type === 'prompt' && (
-                            <>
-                                <CustomizedButton
-                                    title={'Disagree'}
-                                    onClick={handleClose}
-                                />
+            <CustomizedButton
+                title={'Add Task'}
+                onClick={handleValidateTask}
+            />
 
-                                <CustomizedButton
-                                    title={'Agree'}
-                                    onClick={handleNewTask}
-                                />
-                            </>
-                        )}
-
-                        {type === 'alert' && (
-                            <>
-                                <CustomizedButton
-                                    title={'OK'}
-                                    onClick={handleClose}
-                                />
-                            </>
-                        )}
-                    </Stack>
-                </DialogActions>
-            </Dialog>
+            <ValidateTaskDialog
+                dialog={dialog}
+                setDialog={setDialog}
+                handleNewTask={handleNewTask}
+            />
         </>
     )
 }
