@@ -5,7 +5,6 @@ import CustomizedButton from "../Buttons/CustomizedButton";
 import { Done as DoneIcon } from '@mui/icons-material';
 import ActionBar from "../ActionBars/ActionBar";
 import {
-    Box,
     ListItem,
     List,
     ListItemButton,
@@ -57,7 +56,7 @@ export default function TaskList() {
 
     return (
         <>
-            
+
             <ActionBar
                 checkedFade={checkedFade}
                 handleDeleteTask={handleDeleteTask}
@@ -65,7 +64,9 @@ export default function TaskList() {
             />
 
             {toDoList.length === 0 && (
-                <section className="regular-box">To-Do List is Currently Empty</section>
+                <section className="regular-box">
+                    <h3>To-Do List is Currently Empty</h3>
+                </section>
             )}
 
             {toDoList.length > 1 && (
@@ -80,51 +81,52 @@ export default function TaskList() {
                     />
                 </section>
             )}
+            <section>
+                <List sx={{ padding: 0 }}>
+                    <TransitionGroup>
+                        {toDoList.map((value) => {
+                            const { id, title, isCompleted } = value;
+                            const labelId = `checkbox-list-label-${id}`;
 
-            <List sx={{ padding: 0 }}>
-                <TransitionGroup>
-                    {toDoList.map((value) => {
-                        const { id, title, isCompleted } = value;
-                        const labelId = `checkbox-list-label-${id}`;
+                            return (
+                                <Collapse key={id} >
+                                    <ListItem
+                                        key={id}
+                                        disablePadding
 
-                        return (
-                            <Collapse key={id} >
-                                <ListItem
-                                    key={id}
-                                    disablePadding
-
-                                >
-                                    <ListItemButton onClick={handleToggle(id)}>
-                                        <ListItemIcon>
-                                            <Checkbox
-                                                id={id}
-                                                edge="start"
-                                                checked={checked.indexOf(id) !== -1}
-                                                tabIndex={-1}
-                                                disableRipple
-                                                inputProps={{ 'aria-labelledby': labelId }}
-                                                sx={{
-                                                    '&.Mui-checked': {
-                                                        color: '#ffa500'
-                                                    },
-                                                }}
+                                    >
+                                        <ListItemButton onClick={handleToggle(id)}>
+                                            <ListItemIcon>
+                                                <Checkbox
+                                                    id={id}
+                                                    edge="start"
+                                                    checked={checked.indexOf(id) !== -1}
+                                                    tabIndex={-1}
+                                                    disableRipple
+                                                    inputProps={{ 'aria-labelledby': labelId }}
+                                                    sx={{
+                                                        '&.Mui-checked': {
+                                                            color: '#ffa500'
+                                                        },
+                                                    }}
+                                                />
+                                            </ListItemIcon>
+                                            <ListItemText
+                                                id={labelId}
+                                                primary={`${title}`}
+                                                className={isCompleted
+                                                    ? 'item-task-text-completed'
+                                                    : 'item-task-text'}
                                             />
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            id={labelId}
-                                            primary={`${title}`}
-                                            className={isCompleted
-                                                ? 'item-task-text-completed'
-                                                : 'item-task-text'}
-                                        />
-                                        {isCompleted && <DoneIcon />}
-                                    </ListItemButton>
-                                </ListItem>
-                            </Collapse>
-                        );
-                    })}
-                </TransitionGroup>
-            </List>
+                                            {isCompleted && <DoneIcon />}
+                                        </ListItemButton>
+                                    </ListItem>
+                                </Collapse>
+                            );
+                        })}
+                    </TransitionGroup>
+                </List>
+            </section>
         </>
     );
 }

@@ -9,9 +9,9 @@ export default function App() {
     <>
       <Header />
       <main>
-        <div className="fixed-container new-task-controls">
+        <section className="fixed-container new-task-controls">
           <TaskInputToggle />
-        </div>
+        </section>
 
         <TaskList />
       </main >

@@ -15,7 +15,7 @@ import './ActionBar.css'
 
 export default function ActionBar({ checkedFade, handleDeleteTask, handleMarkTasksAsCompleted }) {
     return (
-        <div className="fixed-container action-bar-container">
+        <section className="fixed-container action-bar-container">
             <Fade in={checkedFade} timeout={500}>
                 <div className="action-bar">
                     <IconButton color="success" onClick={() => handleMarkTasksAsCompleted(true)}>
@@ -36,6 +36,6 @@ export default function ActionBar({ checkedFade, handleDeleteTask, handleMarkTas
                     </Tooltip>
                 </div>
             </Fade>
-        </div>
+        </section>
     )
 }
