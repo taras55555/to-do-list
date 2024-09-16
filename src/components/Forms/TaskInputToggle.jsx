@@ -51,7 +51,6 @@ export default function TaskInputToggle() {
     }
 
     function handleValidateTask() {
-        console.log('validate text')
         const open = toDoList.filter((task) => task.title.toLowerCase() === newTaskValue.toLowerCase()).length > 0;
         if (open) {
             setDialog({

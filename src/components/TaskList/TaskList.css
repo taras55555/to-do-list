@@ -4,3 +4,7 @@
     color: gray;
     text-decoration: line-through;
 }
+
+.list-item-button {
+    min-height: 67px;
+}
