@@ -7,13 +7,8 @@ export function ToDoListProvider({ children }) {
     const [toDoList, setToDoList] = useState(JSON.parse(localStorage.getItem('ToDoList')) || []);
     const [toggleNewTaskButton, setToggleNewTaskButton] = useState(true);
 
-    useEffect(() => {
-        document.title = `To-Do List`;
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('ToDoList', JSON.stringify(toDoList))
-    }, [toDoList])
+    useEffect(() => { document.title = `To-Do List` }, [])
+    useEffect(() => { localStorage.setItem('ToDoList', JSON.stringify(toDoList)) }, [toDoList])
 
     return (
         <ToDoListContext.Provider value={{ toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton }}>

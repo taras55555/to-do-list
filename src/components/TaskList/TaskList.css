@@ -1,7 +1,5 @@
-.item-task-text {}
-
 .item-task-text-completed {
-    color: gray;
+    color: var(--gray-color);
     text-decoration: line-through;
 }
 

@@ -1,40 +1,24 @@
 import { useState, useEffect } from "react";
 import { useToDoList } from "../../contexts/ToDoListContext";
 import { TransitionGroup } from 'react-transition-group';
-import CustomizedButton from "../Buttons/CustomizedButton";
-import {
-    Done as DoneIcon,
-    Edit as EditIcon,
-    Save as SaveIcon,
-    Cancel as CancelIcon,
-} from '@mui/icons-material';
+import { Done as DoneIcon, Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon, } from '@mui/icons-material';
 import ActionBar from "../ActionBars/ActionBar";
-import {
-    ListItem,
-    List,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Checkbox,
-    Collapse,
-    IconButton,
-    Input,
-} from '@mui/material';
-
+import { ListItem, List, ListItemButton, ListItemIcon, ListItemText, Checkbox, Collapse, IconButton, Input, } from '@mui/material';
 import './TaskList.css'
+import ActionButtons from "../ActionBars/ActionButtons";
 
 export default function TaskList() {
     const { toDoList, setToDoList } = useToDoList();
-
+    const [activeFilter, setActiveFilter] = useState({});
     const [checked, setChecked] = useState([]);
     const [checkedFade, setCheckedFade] = useState(false);
     const [taskEditInput, setTaskEditInput] = useState('')
 
     useEffect(() => setCheckedFade(checked.length > 0), [checked]);
+    useEffect(() => setChecked([]), [activeFilter]);
 
     const handleMarkTasksAsCompleted = (isChecked) => {
         const nextList = [...toDoList];
-
         checked.forEach((taskId) => {
             const record = nextList.find((task) => task.id === taskId);
             record.isCompleted = isChecked ? true : false;
@@ -52,13 +36,11 @@ export default function TaskList() {
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
-
         if (currentIndex === -1) {
             newChecked.push(value);
         } else {
             newChecked.splice(currentIndex, 1);
         }
-
         setChecked(newChecked);
     };
 
@@ -101,7 +83,28 @@ export default function TaskList() {
         };
         const strDate = new Date(date);
         return strDate.toLocaleString('en-US', options)
+    }
 
+    const displayedTasks = () => {
+        const { active, done } = activeFilter;
+        if (done) {
+            return toDoList.filter((task) => task.isCompleted);
+        } else if (active) {
+            return toDoList.filter((task) => !task.isCompleted);
+        } else {
+            return toDoList
+        }
+    }
+
+    const calculateTaskStatus = () => {
+        return toDoList.reduce((acc, task) => {
+            if (task.isCompleted) {
+                acc.done = ++acc.done || 1
+            } else {
+                acc.active = ++acc.active || 1
+            }
+            return acc;
+        }, { all: toDoList.length })
     }
 
     return (
@@ -112,28 +115,23 @@ export default function TaskList() {
                 handleMarkTasksAsCompleted={handleMarkTasksAsCompleted}
             />
 
+            <ActionButtons
+                toDoList={toDoList}
+                setChecked={setChecked}
+                activeFilter={activeFilter}
+                setActiveFilter={setActiveFilter}
+                calculateTaskStatus={calculateTaskStatus} />
+
             {toDoList.length === 0 && (
                 <section className="regular-box">
                     <h3>To-Do List is Currently Empty</h3>
                 </section>
             )}
 
-            {toDoList.length > 1 && (
-                <section className="regular-box">
-                    <CustomizedButton
-                        onClick={() => setChecked(toDoList.map((task) => task.id))}
-                        title={'Select All'}
-                    />
-                    <CustomizedButton
-                        onClick={() => setChecked([])}
-                        title={'Deselect All'}
-                    />
-                </section>
-            )}
             <section>
                 <List sx={{ padding: 0 }}>
                     <TransitionGroup>
-                        {toDoList.map((value) => {
+                        {displayedTasks().map((value) => {
                             const { id, title, isCompleted, dateAdd, isTaskEditing } = value;
                             const labelId = `checkbox-list-label-${id}`;
 
@@ -143,9 +141,11 @@ export default function TaskList() {
                                         key={id}
                                         secondaryAction={
                                             <>
-                                                <IconButton onClick={() => handleClickEditTask(id)} >
-                                                    {!isTaskEditing && <EditIcon />}
-                                                </IconButton>
+                                                {!isTaskEditing &&
+                                                    <IconButton onClick={() => handleClickEditTask(id)} >
+                                                        <EditIcon />
+                                                    </IconButton>}
+
                                                 {isTaskEditing && <>
                                                     <IconButton onClick={handleClickCancelEditTask}>
                                                         <CancelIcon />
@@ -168,8 +168,6 @@ export default function TaskList() {
                                                     fullWidth
                                                     autoFocus
                                                 />
-
-
                                             </ListItemButton>
                                         }
 
