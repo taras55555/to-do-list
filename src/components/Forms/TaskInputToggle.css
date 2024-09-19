@@ -1,0 +1,12 @@
+.new-task-box-structure {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+}
+
+.new-task-box {
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    box-shadow: 0 0 10px 2px var(--nature-black-color);
+}

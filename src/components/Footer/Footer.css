@@ -1,0 +1,31 @@
+.footer-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--white-color);
+    background-color: var(--main-theme-color);
+    padding: 20px 40px;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.address-style {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+
+}
+
+.address-style a {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}  
+
+@media (min-width: 480px) {
+    .footer-block {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}

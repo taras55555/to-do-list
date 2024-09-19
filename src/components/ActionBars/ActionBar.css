@@ -2,7 +2,6 @@
     position: fixed;
     z-index: 20;
     display: flex;
-
 }
 
 .action-bar-container {
@@ -15,8 +14,8 @@
 
 .new-task-controls {
     right: 40px;
-    bottom: 40px;
-
+    top: 50%;
+    transform: translate(0, -50%);
 }
 
 .action-bar {

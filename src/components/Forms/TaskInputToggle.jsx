@@ -3,6 +3,7 @@ import { useToDoList } from '../../contexts/ToDoListContext';
 import { TextField } from '@mui/material';
 import ValidateTaskDialog from "../Dialogs/ValidateTaskDialog";
 import CustomizedButton from '../Buttons/CustomizedButton';
+import './TaskInputToggle.css';
 
 export default function TaskInputToggle() {
     const [newTaskValue, setNewTaskValue] = useState('')

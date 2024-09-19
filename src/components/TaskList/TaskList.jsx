@@ -6,6 +6,7 @@ import ActionBar from "../ActionBars/ActionBar";
 import { ListItem, List, ListItemButton, ListItemIcon, ListItemText, Checkbox, Collapse, IconButton, Input, } from '@mui/material';
 import './TaskList.css'
 import ActionButtons from "../ActionBars/ActionButtons";
+import TaskInputToggle from "../Forms/TaskInputToggle";
 
 export default function TaskList() {
     const { toDoList, setToDoList } = useToDoList();
@@ -71,16 +72,7 @@ export default function TaskList() {
     }
 
     const getFormattedDate = (date) => {
-        const options = {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour12: false,
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric'
-        };
+        const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' };
         const strDate = new Date(date);
         return strDate.toLocaleString('en-US', options)
     }
@@ -108,7 +100,7 @@ export default function TaskList() {
     }
 
     return (
-        <>
+        <main>
             <ActionBar
                 checkedFade={checkedFade}
                 handleDeleteTask={handleDeleteTask}
@@ -206,6 +198,10 @@ export default function TaskList() {
                     </TransitionGroup>
                 </List>
             </section >
-        </>
+
+            <section className="fixed-container new-task-controls">
+                <TaskInputToggle />
+            </section>
+        </main>
     );
 }
