@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useToDoList } from '../../contexts/ToDoListContext';
-import { TextField } from '@mui/material';
+import { TextField, CircularProgress } from '@mui/material';
 import ValidateTaskDialog from "../Dialogs/ValidateTaskDialog";
 import CustomizedButton from '../Buttons/CustomizedButton';
 import './TaskInputToggle.css';
 
 export default function TaskInputToggle() {
+    const { toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
     const [newTaskValue, setNewTaskValue] = useState('');
     const [dialog, setDialog] = useState({ open: false });
-    const { toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
+    const [isRandomTasksLoading, setIsRandomTasksLoading] = useState(false);
 
     function handleValidateTask() {
         const open = toDoList.filter((task) => task.title.toLowerCase() === newTaskValue.toLowerCase()).length > 0;
@@ -89,14 +90,61 @@ export default function TaskInputToggle() {
         setDialog({ open: false });
     }
 
+    async function fillWithRandomTasks(e) {
+        setIsRandomTasksLoading(true);
+        const request = new Request("http://localhost:3000/api", {
+            method: "GET",
+            headers: {
+                "Content-Type": "Application/json",
+            }
+        })
+
+        try {
+            const response = await fetch(request);
+            if (!response.ok) {
+                throw new Error(`Response status: ${response.status}`);
+            }
+
+            const result = await response.json();
+
+            const currentView = result.map(({ task }) => {
+                return {
+                    id: self.crypto.randomUUID(),
+                    title: task,
+                    dateAdd: Date.now()
+                }
+            })
+
+            setToDoList([
+                ...toDoList,
+                ...currentView
+            ]);
+
+        } catch (err) {
+            console.error('Error:', err)
+        } finally {
+            setIsRandomTasksLoading(false);
+        }
+    }
+
     return (<>
         {!toggleNewTaskButton && <div className="modal" onClick={handleToggleAddTaskForm} />}
         <section className="fixed-container new-task-controls">
             {toggleNewTaskButton
-                ? (<CustomizedButton
-                    onClick={handleToggleAddTaskForm}
-                    title={'Add Task'}
-                />)
+                ? (
+                    <>
+                        <CustomizedButton
+                            onClick={handleToggleAddTaskForm}
+                            title={'Add Task'}
+                        />
+                        <CustomizedButton
+                            onClick={fillWithRandomTasks}
+                            title={isRandomTasksLoading
+                                ? <CircularProgress size={24} color="var(--white-color)" />
+                                : 'add 10 random tasks'}
+                            width={205}
+                        />
+                    </>)
                 : (<div className='new-task-box new-task-box-structure'>
                     <h2>New Task</h2>
                     <TextField
