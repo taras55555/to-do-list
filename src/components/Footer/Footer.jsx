@@ -17,6 +17,22 @@ export default function Footer() {
             <section>
                 <address>
                     <section className='address-style'>
+                        <a href='https://github.com/taras55555/to-do-list' target='_blank'>
+                            <span className='address-line'><GitHubIcon /></span>
+                            <span className='address-line'>Frontend <OpenInNewIcon /></span>
+                        </a>
+                    </section>
+                    <section className='address-style'>
+                        <a href='https://github.com/taras55555/random-task-fetcher' target='_blank'>
+                            <span className='address-line'><GitHubIcon /></span>
+                            <span className='address-line'>Backend <OpenInNewIcon /></span>
+                        </a>
+                    </section>
+                </address>
+            </section>
+            <section>
+                <address>
+                    <section className='address-style'>
                         <a href='https://www.linkedin.com/in/taras-kaminskyi-4a1994229' target='_blank'>
                             <span className='address-line'><LinkedInIcon /></span>
                             <span className='address-line'>Taras Kaminskyi <OpenInNewIcon /></span>
@@ -26,16 +42,8 @@ export default function Footer() {
                         <div className='address-line'><HomeIcon /></div>
                         <div className='address-line'>Lviv, Ukraine</div>
                     </section>
-                    <section className='address-style'>
-                        <a href='https://github.com/taras55555' target='_blank'>
-                            <span className='address-line'><GitHubIcon /></span>
-                            <span className='address-line'>GitHub <OpenInNewIcon /></span>
-                        </a>
-                    </section>
                 </address>
             </section>
-
-
         </footer>
     )
 }
