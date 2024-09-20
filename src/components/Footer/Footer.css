@@ -14,14 +14,18 @@
     align-items: center;
     gap: 10px;
     padding: 5px;
-
 }
 
 .address-style a {
     display: flex;
-    align-items: center;
     gap: 10px
-}  
+}
+
+.address-line {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
 
 @media (min-width: 480px) {
     .footer-block {

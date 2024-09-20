@@ -18,12 +18,16 @@ export default function ActionBar({ checkedFade, handleDeleteTask, handleMarkTas
         <section className="fixed-container action-bar-container">
             <Fade in={checkedFade} timeout={500}>
                 <div className="action-bar">
-                    <IconButton color="success" onClick={() => handleMarkTasksAsCompleted(true)}>
-                        <TaskAltIcon />
-                    </IconButton>
-                    <IconButton onClick={() => handleMarkTasksAsCompleted(false)}>
-                        <RadioButtonUncheckedIcon />
-                    </IconButton>
+                    <Tooltip title="Mark As Complited">
+                        <IconButton color="success" onClick={() => handleMarkTasksAsCompleted(true)}>
+                            <TaskAltIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Mark As Incomplete">
+                        <IconButton onClick={() => handleMarkTasksAsCompleted(false)}>
+                            <RadioButtonUncheckedIcon />
+                        </IconButton>
+                    </Tooltip>
                     <Tooltip title="Delete Selected">
                         <IconButton color="error" onClick={handleDeleteTask}>
                             <DeleteForeverIcon />

@@ -121,7 +121,7 @@ export default function TaskList() {
             )}
 
             <section>
-                <List sx={{ padding: 0 }}>
+                <List sx={{ padding: 0, margin: '30px 0' }}>
                     <TransitionGroup>
                         {displayedTasks().map((value) => {
                             const { id, title, isCompleted, dateAdd, isTaskEditing } = value;
@@ -198,10 +198,7 @@ export default function TaskList() {
                     </TransitionGroup>
                 </List>
             </section >
-
-            <section className="fixed-container new-task-controls">
-                <TaskInputToggle />
-            </section>
+            <TaskInputToggle />
         </main>
     );
 }

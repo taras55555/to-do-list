@@ -6,7 +6,7 @@ import CustomizedButton from '../Buttons/CustomizedButton';
 import './TaskInputToggle.css';
 
 export default function TaskInputToggle() {
-    const [newTaskValue, setNewTaskValue] = useState('')
+    const [newTaskValue, setNewTaskValue] = useState('');
     const [dialog, setDialog] = useState({ open: false });
     const { toDoList, setToDoList, toggleNewTaskButton, setToggleNewTaskButton } = useToDoList();
 
@@ -86,11 +86,12 @@ export default function TaskInputToggle() {
         ]);
         setNewTaskValue('');
         setToggleNewTaskButton(!toggleNewTaskButton);
-        setDialog({open:false});
+        setDialog({ open: false });
     }
 
-    return (
-        <>
+    return (<>
+        {!toggleNewTaskButton && <div className="modal" onClick={handleToggleAddTaskForm} />}
+        <section className="fixed-container new-task-controls">
             {toggleNewTaskButton
                 ? (<CustomizedButton
                     onClick={handleToggleAddTaskForm}
@@ -116,7 +117,8 @@ export default function TaskInputToggle() {
                         setDialog={setDialog}
                         handleNewTask={handleNewTask}
                     />
-                </div>)}
-        </>
-    )
+                </div>)
+            }
+        </section>
+    </>)
 }

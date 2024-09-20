@@ -1,8 +1,9 @@
 import {
     LogoDev as LogoDevIcon,
-    AccountCircle as AccountCircleIcon,
+    LinkedIn as LinkedInIcon,
     Home as HomeIcon,
     GitHub as GitHubIcon,
+    OpenInNew as OpenInNewIcon,
 } from '@mui/icons-material';
 
 import './Footer.css';
@@ -16,17 +17,19 @@ export default function Footer() {
             <section>
                 <address>
                     <section className='address-style'>
-                        <div><AccountCircleIcon /></div>
-                        <div>Taras Kaminskyi</div>
+                        <a href='https://www.linkedin.com/in/taras-kaminskyi-4a1994229' target='_blank'>
+                            <span className='address-line'><LinkedInIcon /></span>
+                            <span className='address-line'>Taras Kaminskyi <OpenInNewIcon /></span>
+                        </a>
                     </section>
                     <section className='address-style'>
-                        <div><HomeIcon /></div>
-                        <div>Lviv, Ukraine</div>
+                        <div className='address-line'><HomeIcon /></div>
+                        <div className='address-line'>Lviv, Ukraine</div>
                     </section>
                     <section className='address-style'>
-                        <a href='https://github.com/taras55555'>
-                            <span><GitHubIcon /></span>
-                            <span>https://github.com/taras55555</span>
+                        <a href='https://github.com/taras55555' target='_blank'>
+                            <span className='address-line'><GitHubIcon /></span>
+                            <span className='address-line'>GitHub <OpenInNewIcon /></span>
                         </a>
                     </section>
                 </address>

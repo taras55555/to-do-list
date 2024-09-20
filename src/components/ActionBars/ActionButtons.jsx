@@ -24,9 +24,6 @@ export default function ActionButtons({ toDoList, setChecked, activeFilter, setA
                             onClick={() => setActiveFilter({ all: true })}
                             disabled={activeFilter.all}
                         />
-                    </section>
-
-                    <section className="regular-box">
                         <CustomizedButton
                             onClick={() => setChecked(toDoList.map((task) => task.id))}
                             title={'Select All'}
@@ -36,6 +33,7 @@ export default function ActionButtons({ toDoList, setChecked, activeFilter, setA
                             title={'Deselect All'}
                         />
                     </section>
+
                 </>
             )
             }
