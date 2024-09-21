@@ -9,6 +9,10 @@
     flex-wrap: wrap;
 }
 
+.footer-block section {
+    display: flex;
+}
+
 .address-style {
     display: flex;
     align-items: center;

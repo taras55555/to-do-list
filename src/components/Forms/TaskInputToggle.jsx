@@ -92,7 +92,9 @@ export default function TaskInputToggle() {
 
     async function fillWithRandomTasks(e) {
         setIsRandomTasksLoading(true);
-        const request = new Request("http://localhost:3000/api", {
+        const BACKEND_URL = "https://reminderwave.site/api";
+
+        const request = new Request(BACKEND_URL, {
             method: "GET",
             headers: {
                 "Content-Type": "Application/json",
