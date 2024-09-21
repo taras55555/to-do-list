@@ -13,7 +13,7 @@ import {
 
 import './ActionBar.css'
 
-export default function ActionBar({ checkedFade, handleDeleteTask, handleMarkTasksAsCompleted }) {
+export default function ActionBar({ checkedFade, handleDeleteTask, handleMarkTasksAsCompleted, handleCopyToClipboard }) {
     return (
         <section className="fixed-container action-bar-container">
             <Fade in={checkedFade} timeout={500}>
@@ -33,7 +33,7 @@ export default function ActionBar({ checkedFade, handleDeleteTask, handleMarkTas
                             <DeleteForeverIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Copy Selected">
+                    <Tooltip title="Copy Selected" onClick={handleCopyToClipboard}>
                         <IconButton>
                             <CopyAllIcon />
                         </IconButton>

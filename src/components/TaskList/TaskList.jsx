@@ -99,12 +99,22 @@ export default function TaskList() {
         }, { all: toDoList.length })
     }
 
+    const handleCopyToClipboard = async () => {
+        try {
+            const filteredToDoList = toDoList.filter((task) => checked.includes(task.id));
+            await navigator.clipboard.writeText(filteredToDoList.map((task) => task.title).join('\n'));
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    }
+
     return (
         <main>
             <ActionBar
                 checkedFade={checkedFade}
                 handleDeleteTask={handleDeleteTask}
                 handleMarkTasksAsCompleted={handleMarkTasksAsCompleted}
+                handleCopyToClipboard={handleCopyToClipboard}
             />
 
             <ActionButtons
