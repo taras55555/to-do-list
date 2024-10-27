@@ -92,7 +92,7 @@ export default function TaskInputToggle() {
 
     async function fillWithRandomTasks(e) {
         setIsRandomTasksLoading(true);
-        const BACKEND_URL = "https://reminderwave.site/api";
+        const BACKEND_URL = "https://nodejsclusters-186041-0.cloudclusters.net/api/random-tasks";
 
         const request = new Request(BACKEND_URL, {
             method: "GET",
